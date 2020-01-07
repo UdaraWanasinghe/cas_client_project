@@ -25,7 +25,7 @@ SECRET_KEY = '+-l$-7$=h8*#v6m(^i0w%(v^zbqknwd0tc1@*=rm2we%@iax=+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['djangoapp1.com']
 
 # Application definition
 
@@ -118,15 +118,29 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CAS_SERVER_URL = "http://127.0.0.1:8000/cas/"
-CAS_CREATE_USER = True
-CAS_CREATE_USER_WITH_ID = True
+# url to the cas server
+CAS_SERVER_URL = "http://127.0.0.1:8080/cas/"
 
+# creates user automatically after successful verification of service token
+CAS_AUTO_CREATE_USER = False
+
+CAS_CREATE_USER = False
+CAS_CREATE_USER_WITH_ID = False
+
+# id True, redirect to cas server logout url after local logout
+CAS_LOGOUT_COMPLETELY = True
+
+# if True, sends service url with the logout url
+CAS_PROVIDE_URL_TO_LOGOUT = True
+
+# if one authentication backend fails, django tries the next one
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'cas.backends.CASBackend',
 )
 
+# after successful service ticket verification, response callback is called
+# response is in xml format
 CAS_RESPONSE_CALLBACKS = (
     'user_save.module.callback_function',
 )
